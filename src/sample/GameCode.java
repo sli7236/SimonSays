@@ -1,9 +1,11 @@
 package sample;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,6 +16,10 @@ import javafx.scene.layout.HBox;
 
 public class GameCode extends Application {
 
+    private long timeStep;
+    private boolean scoring;
+    private int score;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("HBox Experiment 1");
@@ -23,10 +29,48 @@ public class GameCode extends Application {
         Button b2 = new Button("2");
         Button b3 = new Button("3");
         Button b4 = new Button("4");
+        Text txt = new Text(10,0,"Click Score");
 
         /*button.setOnAction(value ->  {
             label.setText("Clicked!");
         });*/
+
+        b1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (scoring)
+                {
+                    score++;
+                }
+                else
+                {
+                    score--;
+                }
+            }
+        });
+
+        timeStep = System.nanoTime() + 1000000000L;
+        new AnimationTimer()
+        {
+            public void handle(long now)
+            {
+                if (now > timeStep)
+                {
+                    timeStep = now + 1000000000L;
+                    scoring = !scoring;
+                }
+                if (!scoring)
+                {
+                    b1.setText("Don't Click");
+                }
+                else
+                {
+                    b1.setText("Click Me!");
+                }
+
+                txt.setText("Score: " + Integer.toString(score));
+            }
+        }.start();
 
         HBox hbox = new HBox(b1, b2, b3, b4);
 
