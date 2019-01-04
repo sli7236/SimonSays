@@ -5,4 +5,5 @@
 <?import javafx.scene.control.Label?>
 <GridPane fx:controller="sample.BackEnd"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <Button fx:id = "button" prefHeight="200.0" prefWidth="200.0" text="Click Here To Start" />
 </GridPane>
